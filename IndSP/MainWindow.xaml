@@ -79,21 +79,21 @@
                     </Grid.ColumnDefinitions>
                     <DataGrid x:Name="selectedEmpl" AutoGenerateColumns="False" ItemsSource="{Binding employees}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Табельний номер" Binding="{Binding TNumber, Mode=TwoWay}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Табельний номер" Binding="{Binding TNumber}" MinWidth="50"/>
                             <DataGridTextColumn Header="Ім'я"  Binding="{Binding Name, Mode=TwoWay}" MinWidth="90" Width="90"/>
                             <DataGridTemplateColumn Header="Дата народження">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding BithdayDate, Mode=TwoWay}"/>
+                                        <DatePicker SelectedDate="{Binding BithdayDate}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridComboBoxColumn  Header="Посада" SelectedItemBinding="{Binding Post}" ItemsSource="{Binding ElementName=cbxPosts}"/>
-                            <DataGridTextColumn Header="Оклад" Binding="{Binding Salary, Mode=TwoWay}"/>
+                            <DataGridTextColumn  Header="Посада" Binding="{Binding Post}"/>
+                            <DataGridTextColumn Header="Оклад" Binding="{Binding Salary}"/>
                             <DataGridTemplateColumn Header="Нагороди">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding HaveAward, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                                        <CheckBox IsChecked="{Binding HaveAward}" HorizontalAlignment="Center"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
