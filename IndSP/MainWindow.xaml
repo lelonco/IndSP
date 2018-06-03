@@ -1,0 +1,118 @@
+﻿<Window x:Class="IndSP.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IndSP"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="513" Width="900" MinWidth="900" MinHeight="500">
+    <Window.Resources>
+        <DataTemplate x:Key="PostsListTempl">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Назва Посади:" Margin="5"/>
+                <TextBox Text="{Binding PostName, Mode=TwoWay}" MinWidth="60" Width="100" Margin="5"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TabControl>
+            <TabItem Header="Робота з файлом">
+                <TabControl>
+                    <TabItem Header="Редагування посад">
+                        <Grid Background="#FFE5E5E5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox Name="lbxPosts" ItemTemplate="{StaticResource PostsListTempl}" />
+                            <StackPanel Grid.Column="1" Name="editPostsButtonPanel" Orientation="Vertical" VerticalAlignment="Bottom">
+                                <Button Name="addPostBtn" Margin="5" Content="ADD POST" Click="addPostBtn_Click"/>
+                                <Button Name="delPostBtn" Margin="5" Content="DELETE POST" Click="delPostBtn_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Редагування робітників">
+                        <Grid Background="#FFE5E5E5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid Name="EditEmpl" AutoGenerateColumns="False" ItemsSource="{Binding employees}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Табельний номер" Binding="{Binding TNumber, Mode=TwoWay}" MinWidth="50"/>
+                                    <DataGridTextColumn Header="Ім'я"  Binding="{Binding Name, Mode=TwoWay}" MinWidth="90" Width="90"/>
+                                    <DataGridTemplateColumn Header="Дата народження">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <DatePicker SelectedDate="{Binding BithdayDate, Mode=TwoWay}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridComboBoxColumn x:Name="cbxPosts" Header="Посада" SelectedItemBinding="{Binding Post}"/>
+                                    <DataGridTextColumn Header="Оклад" Binding="{Binding Salary, Mode=TwoWay}"/>
+                                    <DataGridTemplateColumn Header="Нагороди">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding HaveAward, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Grid.Column="1" Name="editEmpoyeesButtonPanel" Orientation="Vertical" VerticalAlignment="Bottom">
+                                <Button Name="addEmplBtn" Margin="5" Content="ADD EMPLOYEE" Click="addEmplBtn_Click"/>
+                                <Button Name="delEmplBtn" Margin="5" Content="DELETE EMPLOYEE" Click="delEmplBtn_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+            <TabItem Header="Вибірка">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition  Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="selectedEmpl" AutoGenerateColumns="False" ItemsSource="{Binding employees}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Табельний номер" Binding="{Binding TNumber, Mode=TwoWay}" MinWidth="50"/>
+                            <DataGridTextColumn Header="Ім'я"  Binding="{Binding Name, Mode=TwoWay}" MinWidth="90" Width="90"/>
+                            <DataGridTemplateColumn Header="Дата народження">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding BithdayDate, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridComboBoxColumn  Header="Посада" SelectedItemBinding="{Binding Post}" ItemsSource="{Binding ElementName=cbxPosts}"/>
+                            <DataGridTextColumn Header="Оклад" Binding="{Binding Salary, Mode=TwoWay}"/>
+                            <DataGridTemplateColumn Header="Нагороди">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding HaveAward, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Column="1" x:Name="selctBtnPanel" Orientation="Vertical" VerticalAlignment="Bottom">
+                        <Button Name="slectByAgeBtn" Content="SELECT BY AGE" Margin="5" Click="slectByAgeBtn_Click"/>
+                        <Button Name="selectByAwardsBtn" Content="SELECT WHO HAVE AWARDS" Margin="5" Click="selectByAwardsBtn_Click"/>
+                        <Button Name="selectByAvgSalaryBtn" Content="MORE THEN AVG SALARY" Margin="5" Click="selectByAvgSalary_Click"/>
+                        <Button Name="selectBirthdayBtn" Content="NEAR BIRTHDAY" Margin="5" Click="selectBirthday_Click"/>
+                        <Button Name="delAllBtn" Content="DELETE ALL" Margin="5" Click="delAllBtn_Click"/>
+                        <Button Name="saveSelectedBtn" Content="SAVE SELECTED" Margin="5" Click="saveSelectedBtn_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1" Name="mainButtonPanel" Orientation="Vertical" VerticalAlignment="Bottom">
+            <Button Name="loadBtn" Margin="5" Content="LOAD" Click="loadBtn_Click"/>
+            <Button Name="saveBtn" Margin="5" Content="SAVE" Click="saveBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
